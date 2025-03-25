@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>AreExecutionLimitsReached__c</fullName>
+    <description>Indicates if the ASyncJob can be executed again</description>
+    <formula>IF( IsRecursive__c, false,  ExecutionCount__c &gt;=  MaxExecutionCount__c )</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Are Execution Limits Reached</label>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>
