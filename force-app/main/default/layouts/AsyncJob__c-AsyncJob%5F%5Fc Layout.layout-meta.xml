@@ -13,7 +13,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Required</behavior>
-                <field>Job_Name__c</field>
+                <field>JobName__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -103,7 +103,7 @@
     </layoutSections>
     <relatedLists>
         <fields>NAME</fields>
-        <fields>Job_Name__c</fields>
+        <fields>JobName__c</fields>
         <fields>Status__c</fields>
         <fields>ScheduleTime__c</fields>
         <fields>LastExecutionStatus__c</fields>

@@ -11,7 +11,7 @@ public virtual class AsyncJobBuilder {
     public AsyncJobBuilder setParentJobId(Id parentJobId) {
         return this.setValue(AsyncJob__c.ParentJobId__c, parentJobId);
     }
-    
+
     public AsyncJobBuilder setScheduleTime(Datetime scheduleTime) {
         return this.setValue(AsyncJob__c.ScheduleTime__c, scheduleTime);
     }
@@ -23,9 +23,9 @@ public virtual class AsyncJobBuilder {
     public AsyncJobBuilder setMaxExecutionCount(Integer maxExecutionCount) {
         return this.setValue(AsyncJob__c.MaxExecutionCount__c, maxExecutionCount);
     }
-    
-    public AsyncJobBuilder setIsRecursive(Boolean isRecursive) {
-        return this.setValue(AsyncJob__c.IsRecursive__c, isRecursive);
+
+    public AsyncJobBuilder makeRecursive() {
+        return this.setValue(AsyncJob__c.IsRecursive__c, true);
     }
 
     public AsyncJobBuilder setParams(Map<String, Object> params) {

@@ -1,7 +1,11 @@
 public without sharing class AsyncJobBatch implements Database.Batchable<SObject> {
+    
+    public static final String BATCH_JOB_NAME = 'AsyncJobBatch';
+
     private static final Integer BATCH_SIZE = 50;
 
-    private AsyncJobBatch() {}
+    private AsyncJobBatch() {
+    }
 
     public static Id startJob() {
         if (AsyncJobService.isBatchJobActive()) {
@@ -23,11 +27,11 @@ public without sharing class AsyncJobBatch implements Database.Batchable<SObject
         AsyncJobService.setBatchJobId(context.getJobId());
 
         return Database.getQueryLocator([
-            SELECT Id 
-            FROM AsyncJob__c 
-            WHERE Status__c =: AsyncJobConstants.STATUS.QUEUED
-              AND ScheduleTime__c <=: Datetime.now()
-              AND AreExecutionLimitsReached__c = FALSE
+            SELECT Id
+            FROM AsyncJob__c
+            WHERE Status__c = :AsyncJobConstants.STATUS.QUEUED
+            AND ScheduleTime__c <= :Datetime.now()
+            AND AreExecutionLimitsReached__c = FALSE
         ]);
     }
 
@@ -45,6 +49,7 @@ public without sharing class AsyncJobBatch implements Database.Batchable<SObject
     }
 
     public void finish(Database.BatchableContext context) {
-        AsyncJobService.setBatchJobId(System.scheduleBatch(new AsyncJobBatch(), AsyncJobConstants.BATCH_JOB_NAME, 2, BATCH_SIZE));
+        String jobName = Test.isRunningTest() ? BATCH_JOB_NAME + '-' + context.getJobId() : BATCH_JOB_NAME;
+        AsyncJobService.setBatchJobId(System.scheduleBatch(new AsyncJobBatch(), jobName, 1, BATCH_SIZE));
     }
 }

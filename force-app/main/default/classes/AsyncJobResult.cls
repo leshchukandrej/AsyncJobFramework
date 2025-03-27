@@ -16,6 +16,10 @@ public class AsyncJobResult {
         this.message = message;
     }
 
+    public static AsyncJobResult toCompletedResult(String message) {
+        return new AsyncJobResult(AsyncJobStatus.COMPLETED, message);
+    }
+
     public static AsyncJobResult toSuccessResult(String message) {
         return new AsyncJobResult(AsyncJobStatus.SUCCESS, message);
     }

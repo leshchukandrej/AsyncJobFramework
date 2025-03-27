@@ -33,15 +33,11 @@ public without sharing class AsyncJobService {
     }
 
     @Future
-    public static void restartExeutionProcessAsync(Set<Id> jobIds) {
-        restartExeutionProcess(jobIds);
+    public static void restartExecutionProcessAsync(Set<Id> jobIds) {
+        updateStatus(jobIds, AsyncJobConstants.STATUS.HOLD);
+        updateStatus(jobIds, AsyncJobConstants.STATUS.IN_PROGRESS);
     }
 
-    public static void restartExeutionProcess(Set<Id> jobIds) {
-        updateStatus(jobIds, AsyncJobConstants.STATUS.HOLD);
-        updateStatus(jobIds, AsyncJobConstants.STATUS.QUEUED);
-    }
-    
     public AsyncJobHandler toAsyncJobHandler(AsyncJob__c job) {
         String asyncJobHanderClass = getAsyncJobHandlerClass(job.JobName__c);
 
@@ -67,7 +63,7 @@ public without sharing class AsyncJobService {
         handler.lastExecutionStatus = job.LastExecutionStatus__c;
         handler.executionCount = (Integer) job.ExecutionCount__c;
         handler.maxExecutionCount = (Integer) job.MaxExecutionCount__c;
-        
+
         handler.setParams(job.Params__c);
 
         return handler;

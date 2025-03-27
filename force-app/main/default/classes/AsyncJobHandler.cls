@@ -13,11 +13,8 @@ public abstract without sharing class AsyncJobHandler {
     public Integer executionCount;
     public Integer maxExecutionCount;
 
-    public Boolean areExecutionLimitsReached() {
-        return this.executionCount >= this.maxExecutionCount && !this.isRecursive;
+    public virtual void setParams(String params) {
     }
-
-    public virtual void setParams(String params) {}
 
     public abstract AsyncJobResult execute();
 }

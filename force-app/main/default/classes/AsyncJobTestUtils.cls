@@ -1,5 +1,5 @@
 @IsTest
-public class AsyncJobTestUtils {
+public without sharing class AsyncJobTestUtils {
 
     public static void executeAsync(String jobName) {
         AsyncJob__c job = findFirstQueuedJobByActionName(jobName);
@@ -47,7 +47,7 @@ public class AsyncJobTestUtils {
 
     public static List<AsyncJob__c> findJobsByActionName(String jobName) {
         return [
-            SELECT Id, JobName__c, Status__c, LastExecutionStatus__c, ScheduleTime__c, LastExecutionTime__c, ExecutionCount__c
+            SELECT Id, JobName__c, Status__c, LastExecutionStatus__c, ScheduleTime__c, LastExecutionTime__c, ExecutionCount__c, ResultLog__c
             FROM AsyncJob__c
             WHERE JobName__c = :jobName
         ];

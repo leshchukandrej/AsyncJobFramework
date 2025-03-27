@@ -17,7 +17,7 @@ public without sharing class AsyncJobExecutor {
 
     public static void executeNow(Id asyncJobId) {
         AsyncJob__c asyncJob = [
-            SELECT Id, Status__c, ExecutionCount__c, MaxExecutionCount__c, IsRecursive__c, RetryInterval__c, ScheduleTime__c, ResultLog__c, LastExecutionTime__c, LastExecutionStatus__c, Params__c
+            SELECT Id, Status__c, JobName__c, ExecutionCount__c, MaxExecutionCount__c, IsRecursive__c, RetryInterval__c, ScheduleTime__c, ResultLog__c, LastExecutionTime__c, LastExecutionStatus__c, Params__c, CreatedById, CreatedDate
             FROM AsyncJob__c
             WHERE Id = :asyncJobId
         ];
@@ -118,7 +118,6 @@ public without sharing class AsyncJobExecutor {
 
     private void addExecutionCount() {
         this.asyncJob.ExecutionCount__c = (this.asyncJob.ExecutionCount__c ?? 0) + 1;
-        System.debug('Execution count: ' + this.asyncJob.ExecutionCount__c); 
     }
 
     private void setLastExecutionTime() {
@@ -128,7 +127,7 @@ public without sharing class AsyncJobExecutor {
     private void setLastExecutionStatus(AsyncJobResult.AsyncJobStatus status) {
         this.asyncJob.LastExecutionStatus__c = status.name();
     }
-    
+
     private void rescheduleAsyncJob() {
         this.asyncJob.ScheduleTime__c = this.asyncJob.ScheduleTime__c.addMinutes((Integer) this.asyncJob.RetryInterval__c);
     }
@@ -149,8 +148,8 @@ public without sharing class AsyncJobExecutor {
 
     private void makeQueued() {
         this.asyncJob.Status__c = AsyncJobConstants.STATUS.QUEUED;
-    }    
-    
+    }
+
     private void updateAsyncJob() {
         update this.asyncJob;
     }
